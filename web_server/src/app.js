@@ -41,6 +41,34 @@ app.get('/help', (req, res) => {
   });
 });
 
+
+app.get('/weather', (req, res) => {
+  if (!req.query.address) {
+    return res.send({
+      error: 'You must provide an address'
+    });
+  }
+
+  res.send({
+    forecast: 'Rain',
+    location: 'New York City',
+    address: req.query.address
+  });
+});
+
+app.get('/products', (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: 'You must provide a search term'
+    });
+  }
+
+  console.log(req.query);
+  res.send({
+    products: []
+  })
+});
+
 app.get('/help/*', (req, res) => {
   res.render('404', {
     error: 'help article not found'
@@ -52,15 +80,6 @@ app.get('*', (req, res) => {
     error: '404 not found'
   })
 });
-
-app.get('/weather', (req, res) => {
-  res.send({
-    forecast: 'rain',
-    location: 'New York City'
-  });
-});
-
-
 
 app.listen(3000, () => {
   console.log('server is up on port 3000');
