@@ -9,7 +9,9 @@ const forecast = (longitude, latitude, callback) => {
         } else if (body.error) {
           callback('incorrect format', undefined)
         } else {
-          callback(undefined, `${body.daily.data[0].summary} It is currently ${body.currently.temperature} degrees out. There is a ${body.currently.precipProbability}% chance of rain.`);
+          callback(undefined, `${body.daily.data[0].summary} It is currently ${body.currently.temperature} degrees out. 
+          The high today is ${body.data.daily[0].temperatureHigh} degrees and the low is ${body.data.daily[0].temperatureLow}.
+          There is a ${body.currently.precipProbability}% chance of rain.`);
         }
   });
 }
