@@ -10,6 +10,16 @@ app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter);
 
+const brcrypt = require('bcryptjs');
+
+const myFunction = async () => {
+  const password = 'Red12345!';
+  const hashedPassword = await brcrypt.hash(password, 8);
+  const isMatch = await brcrypt.compare('Red12345!', hashedPassword);
+}
+
+myFunction();
+
 app.listen(port, () => {
   console.log('Server is up on port ' + port);
 });
