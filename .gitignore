@@ -89,3 +89,6 @@ typings/
 
 # DS_Store
 .DS_Store
+
+# Config directory
+task_manager/config/
