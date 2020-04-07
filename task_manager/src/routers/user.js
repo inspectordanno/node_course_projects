@@ -75,7 +75,26 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
 });
 
 router.get('/users/me', auth, async (req, res) => {
-  res.send(req.user);
+  try {
+    res.send(req.user);
+  } catch (e) {
+    res.status(404).send();
+  }
+});
+
+router.get('/users/:id/avatar', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user || !user.avatar) {
+      throw new Error();
+    }
+
+    res.set('Content-Type', 'image/png');
+    res.send(user.avatar);
+  } catch (e) {
+    res.status(404).send();
+  }
 });
 
 router.patch('/users/me', auth, async (req, res) => {
@@ -114,21 +133,6 @@ router.delete('/users/me', auth, async (req, res) => {
     res.send(req.user);
   } catch (e) {
     res.status(500).send();
-  }
-});
-
-router.get('/users/:id/avatar', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-
-    if (!user || !user.avatar) {
-      throw new Error();
-    }
-
-    res.set('Content-Type', 'image/png');
-    res.send(user.avatar);
-  } catch (e) {
-    res.status(404).send();
   }
 });
 
