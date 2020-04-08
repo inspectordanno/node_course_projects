@@ -8,7 +8,7 @@
     "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
     "dbstart": "mongod --dbpath=/Users/danno/mongodb-data",
     "dbstop": "mongo admin --eval 'db.shutdownServer()'",
-    "test": "env-cmd -f ./config/test.env jest --watch"
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
   },
   "jest": {
     "testEnvironment": "node"
