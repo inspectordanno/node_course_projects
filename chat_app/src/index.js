@@ -13,18 +13,23 @@ const port = process.env.PORT || 3000; // if run locally, use port 3000; otherwi
 //Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
-let count = 0;
 
 io.on('connection', (socket) => {
   console.log('New WebSocket connection');
 
-  socket.emit('countUpdated', count);
+  //socket.emit() emits to just the connection
+  //io.emit() emits to everyone
+  //socket.broadcast.emit() emits to everyone except the connection
 
-  socket.on('increment', () => {
-    count++;
-    //socket.emit('countUpdated', count);
-    //emit to every single connection
-    io.emit('countUpdated', count);
+  socket.emit('message', 'Welcome!');
+  socket.broadcast.emit('message', 'A new user has joined!');
+
+  socket.on('sendMessage', (message) => {
+    io.emit('message', message);
+  })
+
+  socket.on('disconnect', () => {
+    io.emit('message', 'A user has left');
   })
 
 });
